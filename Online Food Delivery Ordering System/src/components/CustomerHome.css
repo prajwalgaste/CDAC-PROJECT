@@ -1,0 +1,134 @@
+.home-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* NAVBAR */
+.navbar-custom {
+  width: 100%;
+  background: white;
+  padding: 15px 30px;
+}
+
+.brand {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ff3c3c;
+}
+
+.nav-links a {
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+.logout {
+  color: red !important;
+  font-weight: bold;
+}
+
+/* SEARCH BAR */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.search-bar {
+  width: 60%;
+  max-width: 650px;
+  padding: 12px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+}
+
+/* CATEGORIES */
+.category-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+
+/* 4-COLUMN RESTAURANT GRID */
+.restaurant-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 20px 40px;
+  justify-items: center;
+}
+
+/* EACH RESTAURANT CARD */
+.restaurant-item {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* CLEAN ROUNDED CARD WITH HOVER */
+.restaurant-card {
+  border-radius: 15px;
+  overflow: hidden;
+  background: white;
+  transition: 0.25s ease-in-out;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
+.restaurant-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+}
+
+.restaurant-img {
+  height: 170px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.restaurant-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.restaurant-cuisine {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+/* RATING + BUTTON ROW */
+.rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+
+.rating {
+  background: #ffbb00;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+
+/* CLEAN SIMPLE VIEW MENU BUTTON */
+.menu-btn {
+  background: #ff3c3c !important;
+  border: none;
+  padding: 7px 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
