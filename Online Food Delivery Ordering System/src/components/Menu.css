@@ -1,90 +1,68 @@
-/* PAGE */
 .menu-wrapper {
-  width: 100%;
-  min-height: 100vh;
-  background: #fafafa;
-  padding-bottom: 40px;
+  padding: 20px 60px;
+  background: #f8f8f8;
 }
 
-/* BANNER SECTION */
-.menu-banner {
-  position: relative;
-  width: 100%;
-  height: 260px;
-  overflow: hidden;
-  border-radius: 0 0 18px 18px;
-}
-
-.banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(75%);
-}
-
-.banner-info {
-  position: absolute;
-  bottom: 20px;
-  left: 40px;
-  color: white;
-}
-
-.banner-info h2 {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.rating,
-.delivery {
-  font-size: 16px;
-  margin-top: 3px;
-}
-
-/* SEARCH DISH INPUT */
-.dish-search {
+.menu-header {
   display: flex;
-  justify-content: center;
-  margin: 25px 0;
-}
-
-.dish-search-input {
-  width: 60%;
-  max-width: 600px;
-  padding: 12px;
-  border-radius: 30px;
-}
-
-/* DISH GRID */
-.dish-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 per row */
   gap: 25px;
-  padding: 0 40px;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.menu-banner {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.menu-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.menu-cuisine {
+  font-size: 18px;
+  color: #555;
+}
+
+.menu-rating {
+  background: #ffd54f;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-top: 20px;
 }
 
 .dish-card {
-  border-radius: 15px;
-  overflow: hidden;
+  border-radius: 12px;
 }
 
 .dish-img {
   height: 180px;
   object-fit: cover;
-}
-
-.dish-desc {
-  font-size: 14px;
-  color: #555;
-}
-
-.dish-price {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 8px;
+  border-radius: 12px 12px 0 0;
 }
 
 .add-btn {
-  background: #ff3c3c !important;
+  background: #ff4d4d;
   border: none;
-  font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.add-btn:hover {
+  background: #e63946;
 }

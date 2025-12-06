@@ -1,0 +1,7 @@
+.main-navbar a {
+  text-decoration: none !important;
+}
+
+.nav-link:hover {
+  color: #e63946 !important;
+}

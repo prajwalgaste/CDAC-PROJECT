@@ -1,0 +1,56 @@
+.checkout-wrapper {
+  padding: 40px 60px;
+  font-family: "Poppins", sans-serif;
+}
+
+.checkout-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.checkout-container {
+  display: flex;
+  gap: 40px;
+}
+
+.left-box {
+  flex: 2;
+}
+
+.checkout-card {
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.address-box {
+  margin-top: 15px;
+}
+
+.right-box {
+  flex: 1;
+}
+
+.summary-card {
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.summary-total {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.place-order-btn {
+  background: #ff4747;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+}
