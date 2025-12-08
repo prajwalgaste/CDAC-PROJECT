@@ -1,0 +1,70 @@
+/* Background */
+.signin-bg {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  padding: 20px;
+}
+
+/* Card Styling */
+.signin-card {
+  width: 430px;
+  border-radius: 12px;
+  padding: 35px 40px;
+  background: white;
+  border: none;
+}
+
+/* Title */
+.signin-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+/* Inputs */
+.form-group input {
+  height: 48px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* Center button */
+.center-btn {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.center-signin-btn {
+  width: 140px;
+  height: 45px;
+  font-size: 16px;
+}
+
+/* Bottom text */
+.bottom-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.bottom-text a {
+  color: red;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.bottom-text a:hover {
+  text-decoration: underline;
+}
+
+/* Admin login small text */
+.admin-login-box {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #444;
+}
