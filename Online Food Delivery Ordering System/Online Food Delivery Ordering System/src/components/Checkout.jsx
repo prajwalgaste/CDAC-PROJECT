@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext.jsx";
-import { Form, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Checkout.css";
 
@@ -10,82 +9,122 @@ export default function Checkout() {
 
   const [address, setAddress] = useState("");
   const [payment, setPayment] = useState("");
-
+  
+  // Calculate totals
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-  const deliveryFee = 30;
+  const deliveryFee = 30; // Hardcoded fee
   const total = subtotal + deliveryFee;
+
+  if (!cart || cart.length === 0) {
+    return (
+        <div className="checkout-wrapper empty-cart-wrapper">
+            <h2 className="checkout-title">Checkout</h2>
+            <div className="empty-message-box">
+                <p>Your cart is empty. Please add items before checking out.</p>
+                <button className="go-home-btn" onClick={() => navigate("/home")}>
+                    Browse Restaurants
+                </button>
+            </div>
+        </div>
+    );
+  }
 
   const placeOrder = () => {
     if (!address.trim()) {
-      alert("Please enter delivery address");
+      alert("Please enter a valid delivery address.");
       return;
     }
     if (!payment) {
-      alert("Please select payment method");
+      alert("Please select a payment method.");
       return;
     }
+    
+    // Simulate order placement
+    alert(`Order Placed! Total: ₹ ${total} via ${payment} to ${address.substring(0, 20)}...`);
 
     clearCart();
-    // after placing order, send user back to home (or you can navigate to success)
-    navigate("/home");
+    navigate("/orders"); // Navigate to the orders page
   };
 
   return (
-    <div className="checkout-wrapper" style={{ padding: 30 }}>
+    <div className="checkout-wrapper">
       <h2 className="checkout-title">Checkout</h2>
 
-      <div className="checkout-container" style={{ display: "flex", gap: 30 }}>
-        <div style={{ flex: 2 }}>
-          <Card className="p-3 shadow-sm">
-            <h4>Delivery Address</h4>
-            <Form.Control
-              as="textarea"
-              rows={4}
-              placeholder="Enter your complete address…"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="address-box"
-            />
-          </Card>
+      <div className="checkout-container">
+        {/* LEFT SECTION: ADDRESS & PAYMENT */}
+        <div className="left-box">
+          
+          <div className="checkout-card">
+            <h3 className="section-title">1. Delivery Address</h3>
+            
+            <div className="form-group-checkout">
+                <label htmlFor="address-input">Full Delivery Address</label>
+                <textarea
+                    id="address-input"
+                    className="address-input"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    rows="4"
+                />
+            </div>
+          </div>
 
-          <Card className="p-3 shadow-sm mt-4">
-            <h4>Payment Method</h4>
-            <Form.Check label="UPI" name="payment" value="UPI" type="radio" onChange={(e) => setPayment(e.target.value)} />
-            <Form.Check label="Credit / Debit Card" name="payment" value="Card" type="radio" onChange={(e) => setPayment(e.target.value)} />
-            <Form.Check label="Cash on Delivery (COD)" name="payment" value="COD" type="radio" onChange={(e) => setPayment(e.target.value)} />
-          </Card>
+          <div className="checkout-card payment-card">
+            <h3 className="section-title">2. Payment Method</h3>
+            <div className="payment-options">
+                <div className="payment-option">
+                    <input type="radio" id="upi" name="payment" value="UPI" onChange={(e) => setPayment(e.target.value)} />
+                    <label htmlFor="upi">UPI / Net Banking</label>
+                </div>
+                <div className="payment-option">
+                    <input type="radio" id="card" name="payment" value="Card" onChange={(e) => setPayment(e.target.value)} />
+                    <label htmlFor="card">Credit / Debit Card</label>
+                </div>
+                <div className="payment-option">
+                    <input type="radio" id="cod" name="payment" value="COD" onChange={(e) => setPayment(e.target.value)} />
+                    <label htmlFor="cod">Cash on Delivery (COD)</label>
+                </div>
+            </div>
+          </div>
+
         </div>
 
-        <Card className="p-3 shadow-sm" style={{ flex: 1 }}>
-          <h4>Order Summary</h4>
+        {/* RIGHT SECTION: ORDER SUMMARY */}
+        <div className="right-box">
+          <div className="summary-card">
+            <h3 className="summary-title">Order Summary</h3>
 
-          {cart.map((it, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-              <span>{it.name} × {it.qty}</span>
-              <span>₹ {it.price * it.qty}</span>
+            <div className="item-list">
+                {cart.map((it, i) => (
+                    <div key={i} className="summary-item-line">
+                        <span>{it.name} × {it.qty}</span>
+                        <span>₹ {it.price * it.qty}</span>
+                    </div>
+                ))}
             </div>
-          ))}
 
-          <hr />
+            <hr className="summary-divider" />
 
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>Subtotal</span>
-            <span>₹ {subtotal}</span>
+            <div className="summary-line">
+              <span>Subtotal</span>
+              <span>₹ {subtotal}</span>
+            </div>
+            <div className="summary-line">
+              <span>Delivery Fee</span>
+              <span>₹ {deliveryFee}</span>
+            </div>
+
+            <div className="summary-total">
+              <span>Total</span>
+              <span>₹ {total}</span>
+            </div>
+
+            <button className="place-order-btn" onClick={placeOrder}>
+              Place Order
+            </button>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span>Delivery Fee</span>
-            <span>₹ {deliveryFee}</span>
-          </div>
-
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 700, marginTop: 12 }}>
-            <span>Total</span>
-            <span>₹ {total}</span>
-          </div>
-
-          <Button className="place-order-btn w-100 mt-3" onClick={placeOrder}>
-            Place Order
-          </Button>
-        </Card>
+        </div>
       </div>
     </div>
   );

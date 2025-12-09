@@ -10,17 +10,7 @@ export default function CustomerHome() {
   return (
     <div className="home-wrapper">
 
-      {/* NAVBAR */}
-      <div className="navbar-custom shadow-sm">
-        <h2 className="brand">FoodExpress</h2>
-
-        <div className="nav-links">
-          <span onClick={() => navigate("/home")}>Home</span>
-          <span>My Orders</span>
-          <span>Profile</span>
-          <span onClick={() => navigate("/signin")} className="logout">Logout</span>
-        </div>
-      </div>
+      {/* The hardcoded navbar was removed from here. */}
 
       {/* SEARCH BAR */}
       <div className="search-container">

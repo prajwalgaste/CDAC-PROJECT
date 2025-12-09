@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext.jsx";
-import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
@@ -8,55 +7,86 @@ export default function Cart() {
   const { cart, increaseQty, decreaseQty, removeItem, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
 
+  // Calculation logic is moved out of inline styles and kept clean
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
   const deliveryFee = cart.length > 0 ? 30 : 0;
   const total = subtotal + deliveryFee;
 
   if (!cart || cart.length === 0) {
-    return <h3 className="text-center mt-5">Your cart is empty</h3>;
+    return (
+        <div className="cart-wrapper empty-cart-wrapper">
+            <h2 className="cart-title">Your Cart</h2>
+            <div className="empty-message-box">
+                <p>Your cart is empty. Add some delicious food to place an order!</p>
+                <button className="go-home-btn" onClick={() => navigate("/home")}>
+                    Browse Restaurants
+                </button>
+            </div>
+        </div>
+    );
   }
 
   return (
-    <div className="cart-page-wrapper" style={{ padding: 30 }}>
-      <h2 className="mb-4">Your Cart</h2>
+    <div className="cart-wrapper">
+      <h2 className="cart-title">Your Cart ({cart.length} items)</h2>
 
-      <div className="cart-content" style={{ display: "flex", gap: 30 }}>
-        <div className="item-section" style={{ flex: 3 }}>
-          {cart.map((item, i) => (
-            <Card key={i} className="cart-item-card shadow-sm" style={{ display: "flex", gap: 16, padding: 12, marginBottom: 16 }}>
-              <img src={item.img} alt={item.name} style={{ width: 120, height: 90, objectFit: "cover", borderRadius: 8 }} />
+      <div className="cart-container">
+        {/* LEFT SECTION: ITEMS */}
+        <div className="cart-items">
+          {cart.map((item) => (
+            <div key={item.name} className="cart-card">
+              <img src={item.img} alt={item.name} className="cart-img" />
 
-              <div className="cart-details" style={{ flex: 1 }}>
+              <div className="cart-info">
                 <h5>{item.name}</h5>
-                <p>₹ {item.price}</p>
+                <p className="item-price">₹ {item.price}</p>
 
-                <div className="qty-box" style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <Button onClick={() => decreaseQty(item.name)}>-</Button>
-                  <span>{item.qty}</span>
-                  <Button onClick={() => increaseQty(item.name)}>+</Button>
+                <div className="qty-controls">
+                  <button className="qty-btn" onClick={() => decreaseQty(item.name)} disabled={item.qty <= 1}>
+                    -
+                  </button>
+                  <span className="qty-value">{item.qty}</span>
+                  <button className="qty-btn" onClick={() => increaseQty(item.name)}>
+                    +
+                  </button>
                 </div>
-
-                <Button variant="danger" className="mt-2" onClick={() => removeItem(item.name)}>
-                  Remove
-                </Button>
               </div>
-            </Card>
+
+              <div className="cart-item-footer">
+                <p className="item-total">
+                    Total: <span className="total-amount">₹ {item.price * item.qty}</span>
+                </p>
+                <button className="remove-btn" onClick={() => removeItem(item.name)}>
+                  Remove
+                </button>
+              </div>
+            </div>
           ))}
         </div>
 
-        <div className="summary-box shadow-sm" style={{ flex: 1, padding: 18, borderRadius: 8 }}>
+        {/* RIGHT SECTION: SUMMARY */}
+        <div className="summary-box">
           <h4>Bill Summary</h4>
-          <p>Subtotal: ₹ {subtotal}</p>
-          <p>Delivery Fee: ₹ {deliveryFee}</p>
-          <h5>Total: ₹ {total}</h5>
+          <div className="summary-line">
+            <span>Subtotal:</span>
+            <span>₹ {subtotal}</span>
+          </div>
+          <div className="summary-line">
+            <span>Delivery Fee:</span>
+            <span>₹ {deliveryFee}</span>
+          </div>
+          
+          <div className="summary-total-line">
+            <h5>Total:</h5>
+            <h5>₹ {total}</h5>
+          </div>
 
-          <Button className="w-100 mt-3" onClick={() => navigate("/checkout")}>
+          <button className="checkout-btn" onClick={() => navigate("/checkout")}>
             Proceed to Checkout
-          </Button>
-
-          <Button className="w-100 mt-2" variant="danger" onClick={clearCart}>
+          </button>
+          <button className="clear-cart-btn" onClick={clearCart}>
             Clear Cart
-          </Button>
+          </button>
         </div>
       </div>
     </div>

@@ -1,61 +1,118 @@
-/* FULL SCREEN BACKGROUND */
-.signup-bg {
-  height: 100vh;
-  width: 100vw;
+/* Inherit from Signin.css for consistency */
+:root {
+  --form-primary: #e63946; /* Vibrant Red/Coral */
+  --form-bg: #f7f7f7;
+  --input-border: #d1d5db;
+  --input-focus: #b8002a;
+}
 
+/* Background - Use the same look as signin for continuity */
+.signup-bg {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background: linear-gradient(135deg, #ff7a18, #ff3c3c);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: var(--form-bg);
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
 }
 
 /* SIGNUP CARD */
 .signup-card {
   width: 100%;
-  max-width: 420px;
-  padding: 35px;
+  max-width: 450px; /* Slightly wider for more fields */
+  padding: 40px;
   background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* FIXED ALIGNMENT */
-.signup-card .form-group {
-  display: flex;
-  flex-direction: column;
+/* TITLE */
+.signup-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: var(--form-primary);
+}
+
+
+/* Form Group */
+.form-group-custom {
+    margin-bottom: 20px;
+}
+
+/* Labels, Inputs, Buttons - Shared styles with Signin.css */
+.form-group-custom label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 14px;
+    color: #374151;
+}
+
+.form-group-custom input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.form-group-custom input:focus {
+    outline: none;
+    border-color: var(--form-primary);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+/* Error/Validation */
+.error-text {
+    color: #ef4444;
+    font-size: 13px;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.input.is-invalid {
+    border-color: #ef4444 !important;
+}
+
+/* Sign Up Button */
+.signup-btn {
   width: 100%;
-  margin-bottom: 16px;
-}
-
-/* LABELS */
-.signup-card label {
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-/* INPUT BOXES (FULL WIDTH) */
-.signup-card .form-control {
-  width: 100% !important;
-  padding: 10px;
+  padding: 14px;
+  background: var(--form-primary);
+  color: white;
+  border: none;
   border-radius: 8px;
-  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
 }
 
-.signup-card .form-control:focus {
-  border-color: #ff3c3c;
-  box-shadow: 0 0 0 0.2rem rgba(255, 60, 60, 0.25);
+.signup-btn:hover {
+  background: var(--input-focus);
 }
 
-/* LINKS */
-.signup-card a {
-  color: #ff3c3c;
+/* Login Link */
+.login-text {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 15px;
+  color: #6b7280;
+}
+
+.login-text a {
+  color: var(--form-primary);
   font-weight: 600;
   text-decoration: none;
 }
 
-.signup-card a:hover {
+.login-text a:hover {
   text-decoration: underline;
 }

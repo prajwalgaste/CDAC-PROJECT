@@ -1,7 +1,66 @@
-.main-navbar a {
-  text-decoration: none !important;
+:root {
+  --nav-primary: #e63946; /* Vibrant Red/Coral for brand */
+  --nav-link-color: #333333;
+  --nav-link-hover: var(--nav-primary);
+  --nav-bg: #ffffff;
+  --nav-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.main-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 50px;
+  background: var(--nav-bg);
+  box-shadow: var(--nav-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}
+
+.nav-logo {
+  color: var(--nav-primary);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0;
+  transition: color 0.2s;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: var(--nav-link-color);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s, border-bottom 0.2s;
+  padding-bottom: 3px;
 }
 
 .nav-link:hover {
-  color: #e63946 !important;
+  color: var(--nav-link-hover);
+  border-bottom: 2px solid var(--nav-link-hover);
+}
+
+.nav-link.active {
+  color: var(--nav-primary);
+  font-weight: 600;
+  border-bottom: 2px solid var(--nav-primary);
+}
+
+.logout-link {
+  color: var(--nav-primary);
+  font-weight: 600;
+}
+
+.logout-link:hover {
+  color: #c0392b; /* Darker red on hover */
 }

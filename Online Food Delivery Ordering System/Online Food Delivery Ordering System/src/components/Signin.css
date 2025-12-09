@@ -1,58 +1,107 @@
+/* GENERAL FORM STYLES */
+:root {
+  --form-primary: #e63946; /* Match Navbar brand color */
+  --form-bg: #f7f7f7;
+  --input-border: #d1d5db;
+  --input-focus: #b8002a;
+}
+
 /* Background */
 .signin-bg {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #ff6a00, #ee0979);
+  background: var(--form-bg); 
   padding: 20px;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Card Styling */
 .signin-card {
-  width: 430px;
+  width: 100%;
+  max-width: 400px;
   border-radius: 12px;
-  padding: 35px 40px;
+  padding: 40px;
   background: white;
-  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.signin-card:hover {
+    transform: translateY(-3px);
 }
 
 /* Title */
 .signin-title {
   text-align: center;
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  color: var(--form-primary);
+}
+
+/* Form Group */
+.form-group-custom {
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.form-group-custom label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 14px;
+    color: #374151;
 }
 
 /* Inputs */
-.form-group input {
-  height: 48px;
+.form-group-custom input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.form-group-custom input:focus {
+    outline: none;
+    border-color: var(--form-primary);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+}
+
+/* Signin Button */
+.signin-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--form-primary);
+  color: white;
+  border: none;
   border-radius: 8px;
-  font-size: 15px;
-}
-
-/* Center button */
-.center-btn {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.center-signin-btn {
-  width: 140px;
-  height: 45px;
   font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
 }
 
-/* Bottom text */
+.signin-btn:hover {
+  background: var(--input-focus);
+}
+
+/* Links/Bottom Text */
 .bottom-text {
-  margin-top: 15px;
+  margin-top: 25px;
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
+  color: #6b7280;
 }
 
 .bottom-text a {
-  color: red;
+  color: var(--form-primary);
   font-weight: 600;
   text-decoration: none;
 }
@@ -61,10 +110,14 @@
   text-decoration: underline;
 }
 
-/* Admin login small text */
-.admin-login-box {
+/* Error/Alert */
+.error {
+  color: #ef4444;
+  background-color: #fee2e2;
+  border-radius: 8px;
+  padding: 10px;
   text-align: center;
-  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 14px;
-  color: #444;
+  border: 1px solid #f87171;
 }

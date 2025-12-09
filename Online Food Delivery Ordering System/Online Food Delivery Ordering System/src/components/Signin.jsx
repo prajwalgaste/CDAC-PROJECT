@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Form, Card, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Signin.css";
 
 export default function Signin() {
@@ -10,6 +9,7 @@ export default function Signin() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // Clear error on change
   };
 
   const handleSubmit = (e) => {
@@ -18,73 +18,67 @@ export default function Signin() {
     const { email, password } = formData;
 
     if (!email || !password) {
-      setError("All fields are required");
+      setError("Please enter both email and password.");
       return;
     }
 
-    // ⭐ ADMIN LOGIN CHECK
-    if (email === "admin@foodapp.com" && password === "admin123") {
-      alert("Admin Login Successful!");
+    // ADMIN LOGIN CHECK (Using credentials provided in Admin module)
+    if (email === "admin@gmail.com" && password === "ADMIN") {
+      alert("Admin Login Successful! Redirecting to dashboard.");
       navigate("/admin/dashboard");
       return;
     }
 
-    // ⭐ USER LOGIN
-    alert("User Login Successful!");
+    // USER LOGIN (Simplified for demo)
+    alert(`User ${email} Login Successful!`);
     navigate("/home");
   };
 
   return (
     <div className="signin-bg">
-      <Card className="signin-card shadow-lg">
-        <Card.Body>
-          <h2 className="text-center mb-4">Sign In</h2>
+      <div className="signin-card">
+        <h2 className="signin-title">Welcome Back</h2>
 
-          {error && <p className="text-danger text-center">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </Form.Group>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group-custom">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </Form.Group>
+          <div className="form-group-custom">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <div className="text-center">
-              <Button type="submit" className="signin-btn">
-                Login
-              </Button>
-            </div>
-          </Form>
+          <button type="submit" className="signin-btn">
+            Sign In
+          </button>
+        </form>
 
-          <p className="text-center mt-3">
-            Don't have an account? <a href="/signup">Sign Up</a>
-          </p>
+        <p className="bottom-text">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
 
-          {/* ⭐ Admin Hint (Optional) */}
-          <p className="admin-hint">
-           <center><a href="/admin/login" className="admin-login-link">Admin Login</a><br /></center> 
-            
-
-          </p>
-
-        </Card.Body>
-      </Card>
+        <p className="bottom-text" style={{marginTop: "5px"}}>
+            <Link to="/admin/login">Admin Login</Link>
+        </p>
+      </div>
     </div>
   );
 }

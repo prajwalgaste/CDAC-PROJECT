@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Form, Card, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -15,24 +16,30 @@ export default function Signup() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear the specific error when user starts typing
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const validateForm = () => {
     let newErrors = {};
+    const emailRegex = /\S+@\S+\.\S+/;
+    const phoneRegex = /^\d{10}$/; // Basic 10-digit check
 
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
+    
     if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email))
+    else if (!emailRegex.test(formData.email))
       newErrors.email = "Invalid email format";
 
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    else if (!phoneRegex.test(formData.phone))
+        newErrors.phone = "Phone must be 10 digits";
 
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
 
-    if (!formData.confirmPassword)
-      newErrors.confirmPassword = "Confirm password is required";
+    if (!formData.confirmPassword) newErrors.confirmPassword = "Confirm password is required";
     else if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
 
@@ -42,110 +49,100 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (validateForm()) {
-      alert("Signup Successful!");
-      console.log("Form Data Submitted:", formData);
+      // Logic to register the user goes here (e.g., API call)
+      alert("Registration Successful! Redirecting to sign in.");
+      navigate("/signin");
     }
   };
 
   return (
     <div className="signup-bg">
-      <Card className="signup-card shadow-lg">
-        <Card.Body>
-          <h2 className="text-center mb-4">Create Account</h2>
+      <div className="signup-card">
+        <h2 className="signup-title">Create Account</h2>
 
-          <Form onSubmit={handleSubmit} className="w-100">
+        <form onSubmit={handleSubmit}>
+          
+          <div className="form-group-custom">
+            <label htmlFor="fullName">Full Name</label>
+            <input
+              id="fullName"
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              className={errors.fullName ? "input is-invalid" : ""}
+              required
+            />
+            {errors.fullName && <div className="error-text">{errors.fullName}</div>}
+          </div>
 
-            <Form.Group className="mb-3 form-group">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="fullName"
-                placeholder="Enter your full name"
-                value={formData.fullName}
-                onChange={handleChange}
-                isInvalid={!!errors.fullName}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.fullName}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <div className="form-group-custom">
+            <label htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? "input is-invalid" : ""}
+              required
+            />
+            {errors.email && <div className="error-text">{errors.email}</div>}
+          </div>
 
-            <Form.Group className="mb-3 form-group">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                isInvalid={!!errors.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <div className="form-group-custom">
+            <label htmlFor="phone">Phone Number</label>
+            <input
+              id="phone"
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className={errors.phone ? "input is-invalid" : ""}
+              required
+            />
+            {errors.phone && <div className="error-text">{errors.phone}</div>}
+          </div>
 
-            <Form.Group className="mb-3 form-group">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="text"
-                name="phone"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={handleChange}
-                isInvalid={!!errors.phone}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.phone}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <div className="form-group-custom">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={errors.password ? "input is-invalid" : ""}
+              required
+            />
+            {errors.password && <div className="error-text">{errors.password}</div>}
+          </div>
 
-            <Form.Group className="mb-3 form-group">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                value={formData.password}
-                onChange={handleChange}
-                isInvalid={!!errors.password}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.password}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <div className="form-group-custom">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className={errors.confirmPassword ? "input is-invalid" : ""}
+              required
+            />
+            {errors.confirmPassword && <div className="error-text">{errors.confirmPassword}</div>}
+          </div>
 
-            <Form.Group className="mb-3 form-group">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="confirmPassword"
-                placeholder="Re-enter password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                isInvalid={!!errors.confirmPassword}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.confirmPassword}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <button type="submit" className="signup-btn">
+            Register
+          </button>
+        </form>
 
-            {/* CENTERED BUTTON */}
-            <div className="center-btn">
-              <Button variant="primary" type="submit" className="center-signup-btn">
-                Sign Up
-              </Button>
-            </div>
-          </Form>
-
-          {/* CENTERED LOGIN TEXT */}
-          <p className="login-text">
-  Already have an account? <a href="/signin">Sign in</a>
-</p>
-
-        </Card.Body>
-      </Card>
+        <p className="login-text">
+          Already have an account? <Link to="/signin">Sign in</Link>
+        </p>
+      </div>
     </div>
   );
 }

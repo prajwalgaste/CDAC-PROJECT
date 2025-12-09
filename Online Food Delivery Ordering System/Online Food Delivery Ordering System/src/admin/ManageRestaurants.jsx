@@ -1,48 +1,94 @@
-import React, { useState } from "react";
-import restaurantData from "../data/restaurantData";
-import "./ManageRestaurants.css";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import restaurantData from "../data/restaurantData"; // Keep this as seed data
+import "./ManageRestaurants.css";
 
 export default function ManageRestaurants() {
-  const [restaurants, setRestaurants] = useState(restaurantData);
+  const [restaurants, setRestaurants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const deleteRestaurant = (id) => {
-    const updated = restaurants.filter((item) => item.id !== id);
-    setRestaurants(updated);
+  useEffect(() => {
+    // 1. Check LocalStorage
+    const stored = localStorage.getItem("restaurants");
+    
+    if (stored) {
+      setRestaurants(JSON.parse(stored));
+    } else {
+      // 2. If empty, load seed data and save it to LS for future use
+      setRestaurants(restaurantData);
+      localStorage.setItem("restaurants", JSON.stringify(restaurantData));
+    }
+  }, []);
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this restaurant?")) {
+      const updated = restaurants.filter((item) => item.id !== id);
+      setRestaurants(updated);
+      localStorage.setItem("restaurants", JSON.stringify(updated));
+    }
   };
+
+  // Filter logic
+  const filteredRestaurants = restaurants.filter(
+    (res) =>
+      res.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      res.cuisine.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="manage-wrapper">
-      <h2 className="manage-title">Manage Restaurants</h2>
+      <div className="manage-header">
+        <div>
+          <h2 className="manage-title">Manage Restaurants</h2>
+          <p className="admin-subtext">View, edit, or delete your listings.</p>
+        </div>
+        
+        <Link to="/admin/add-restaurant">
+          <button className="add-btn">+ Add New</button>
+        </Link>
+      </div>
 
-      <Link to="/admin/add-restaurant">
-        <button className="add-btn">+ Add Restaurant</button>
-      </Link>
+      {/* Search Bar */}
+      <div className="search-bar-container">
+        <input 
+          type="text" 
+          placeholder="Search by name or cuisine..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+      </div>
 
       <div className="restaurant-grid">
-        {restaurants.map((res) => (
-          <div className="restaurant-card-admin" key={res.id}>
-            <img src={res.img} alt={res.name} className="admin-res-img" />
+        {filteredRestaurants.length > 0 ? (
+          filteredRestaurants.map((res) => (
+            <div className="restaurant-card-admin" key={res.id}>
+              <div className="card-img-wrapper">
+                 <img src={res.img} alt={res.name} className="admin-res-img" />
+                 <span className="rating-badge">★ {res.rating}</span>
+              </div>
 
-            <div className="admin-res-info">
-              <h3>{res.name}</h3>
-              <p>{res.cuisine}</p>
+              <div className="admin-res-info">
+                <h3>{res.name}</h3>
+                <p className="cuisine-tag">{res.cuisine}</p>
+              </div>
+
+              <div className="admin-res-actions">
+                <Link to={`/admin/edit-restaurant/${res.id}`} style={{flex: 1}}>
+                  <button className="edit-btn">Edit</button>
+                </Link>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(res.id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-
-            <div className="admin-res-actions">
-              <Link to={`/admin/edit-restaurant/${res.id}`}>
-                <button className="edit-btn">Edit</button>
-              </Link>
-
-              <button
-                className="delete-btn"
-                onClick={() => deleteRestaurant(res.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="no-data">No restaurants found.</p>
+        )}
       </div>
     </div>
   );

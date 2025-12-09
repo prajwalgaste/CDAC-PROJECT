@@ -1,47 +1,48 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; 
 import "./Navbar.css";
 
 export default function AppNavbar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Helper to determine if a link is active
+  const isActive = (path) => location.pathname === path ? "active" : "";
 
   return (
-    <div
-      className="main-navbar shadow-sm"
-      style={{
-        padding: "18px 50px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        background: "#fff",
-      }}
-    >
-      <h2
-        style={{
-          color: "#e63946",
-          cursor: "pointer",
-          fontWeight: "700",
-          margin: 0,
-        }}
+    <nav className="main-navbar">
+      <h2 
+        className="nav-logo"
         onClick={() => navigate("/home")}
       >
-        FoodExpress
+        FoodExpress 🍕
       </h2>
 
-      <Nav style={{ display: "flex", gap: "25px", fontSize: "17px" }}>
-        <Nav.Link onClick={() => navigate("/home")} style={{ color: "black" }}>
-          Home
-        </Nav.Link>
-        <Nav.Link style={{ color: "black" }}>My Orders</Nav.Link>
-        <Nav.Link style={{ color: "black" }}>Profile</Nav.Link>
-        <Nav.Link
-          onClick={() => navigate("/signin")}
-          style={{ color: "red", fontWeight: 600 }}
-        >
-          Logout
-        </Nav.Link>
-      </Nav>
-    </div>
+      <ul className="nav-links">
+        <li>
+          <Link to="/home" className={`nav-link ${isActive("/home")}`}>
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to="/orders" className={`nav-link ${isActive("/orders")}`}>
+            My Orders
+          </Link>
+        </li>
+        <li>
+          <Link to="/profile" className={`nav-link ${isActive("/profile")}`}>
+            Profile
+          </Link>
+        </li>
+        <li>
+          <Link 
+            to="/signin" 
+            className="nav-link logout-link"
+          >
+            Logout
+          </Link>
+        </li>
+      </ul>
+    </nav>
   );
 }

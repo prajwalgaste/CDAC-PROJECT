@@ -9,21 +9,24 @@ export default function AdminLogin() {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    // Clear error message on new input
+    setError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!form.email || !form.password) {
-      setError("All fields are required");
+      setError("Please enter both email and password.");
       return;
     }
 
+    // Hardcoded check (Based on your original logic)
     if (form.email === "admin@gmail.com" && form.password === "ADMIN") {
-      alert("Admin Login Successful!");
+      // In a real app, you would set an Auth token here
       navigate("/admin/dashboard");
     } else {
-      setError("Invalid admin credentials");
+      setError("Invalid admin credentials. (Hint: admin@gmail.com / ADMIN)");
     }
   };
 
@@ -35,30 +38,26 @@ export default function AdminLogin() {
         {error && <p className="error">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          <label>Email</label>
+          <label>Email Address</label>
           <input
             type="email"
             name="email"
-            placeholder="admin@foodapp.com"
             onChange={handleChange}
+            required
           />
 
           <label>Password</label>
           <input
             type="password"
             name="password"
-            placeholder="admin123"
             onChange={handleChange}
+            required
           />
 
           <button type="submit" className="admin-login-btn">
-            Login
+            Sign In
           </button>
         </form>
-
-        <p className="back-text">
-          <a href="/signin">Back to User Login</a>
-        </p>
       </div>
     </div>
   );
